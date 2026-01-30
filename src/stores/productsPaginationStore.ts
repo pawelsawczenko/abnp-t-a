@@ -3,18 +3,18 @@ import { create } from 'zustand';
 interface PaginationState {
   pageNum: number;
   totalPages: number;
-  setTotalPages: (n: number) => void;
+  setTotalPages: (num: number) => void;
   nextPage: () => void;
   prevPage: () => void;
-  setPage: (n: number) => void;
+  setPageNum: (num: number) => void;
 }
 
 export const usePaginationStore = create<PaginationState>((set, get) => ({
   pageNum: 1,
   totalPages: 1,
 
-  setPage: (n) => set({ pageNum: n }),
-  setTotalPages: (n) => set({ totalPages: n }),
+  setPageNum: (num) => set({ pageNum: num }),
+  setTotalPages: (num) => set({ totalPages: num }),
 
   nextPage: () => {
     const { pageNum, totalPages } = get();

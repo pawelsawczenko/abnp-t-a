@@ -1,43 +1,63 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getProducts } from '../../api/productsAPI';
 import { ProductCard } from '../ProductCard/ProductCard';
 import { SkeletonCard } from '../ProductCard/SkeletonCard';
 import { ProductsPagination } from '../ProductsPagination/ProductsPagination';
 import { usePaginationStore } from '../../stores/productsPaginationStore';
-
-const PRODUCTS_PER_PAGE = 12;
+import { getCategories } from '../../api/categoriesAPI';
+import { CategoriesFilter } from '../CategoriesFilter/CategoriesFilter';
+import { useProductsCategoriesFilterStore } from '../../stores/productsCategoriesFilterStore';
+import { PRODUCTS_PER_PAGE } from '../../constants';
 
 export const Products = () => {
   const {
     data: products,
-    isLoading,
-    isError,
-    error
+    isLoading: isLoadingProducts,
+    isError: isErrorProducts,
+    error: errorProducts
   } = useQuery({
     queryKey: ['products'],
     queryFn: getProducts
   });
 
-  const { pageNum, setTotalPages } = usePaginationStore();
+  const {
+    data: categories,
+    isLoading: isLoadingCategories,
+    isError: isErrorCategories,
+    error: errorCategories
+  } = useQuery({
+    queryKey: ['categories'],
+    queryFn: getCategories
+  });
+
+  const { selectedCategory } = useProductsCategoriesFilterStore();
+
+  const { pageNum, totalPages, setTotalPages, setPageNum } = usePaginationStore();
+
+  const filteredProducts = useMemo(() => {
+    if (!products) return [];
+    return selectedCategory ? products.filter((p) => p.category === selectedCategory) : products;
+  }, [products, selectedCategory]);
+
+  const lastIndex = pageNum * PRODUCTS_PER_PAGE;
+  const firstIndex = lastIndex - PRODUCTS_PER_PAGE;
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (products) {
-      const total = Math.ceil(products.length / PRODUCTS_PER_PAGE);
+    const total = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+    if (total !== totalPages) {
       setTotalPages(total);
+      setPageNum(1);
     }
-  }, [products, setTotalPages]);
+  }, [filteredProducts, totalPages, setTotalPages, setPageNum]);
 
   useEffect(() => {
     containerRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [pageNum]);
 
-  const lastIndex = pageNum * PRODUCTS_PER_PAGE;
-  const firstIndex = lastIndex - PRODUCTS_PER_PAGE;
-
-  if (isLoading) {
+  if (isLoadingProducts || isLoadingCategories) {
     return (
       <div className="mb-4 grid w-xs gap-x-8 gap-y-4 md:w-2xl md:grid-cols-2 xl:w-5xl xl:grid-cols-3">
         {[...Array(PRODUCTS_PER_PAGE)].map((_, i) => (
@@ -47,17 +67,23 @@ export const Products = () => {
     );
   }
 
-  if (isError) {
-    return <div>Error: {error.message}</div>;
+  if (isErrorProducts || isErrorCategories) {
+    return (
+      <div>
+        Error: {errorProducts?.message} {errorCategories?.message}
+      </div>
+    );
   }
 
   return (
     <>
+      <CategoriesFilter categories={categories || []} />
+
       <div
         ref={containerRef}
         className="mb-8 grid w-xs gap-x-8 gap-y-4 pt-4 md:w-2xl md:grid-cols-2 xl:w-5xl xl:grid-cols-3">
-        {products ? (
-          products
+        {filteredProducts.length > 0 ? (
+          filteredProducts
             .slice(firstIndex, lastIndex)
             .map((product) => (
               <ProductCard
