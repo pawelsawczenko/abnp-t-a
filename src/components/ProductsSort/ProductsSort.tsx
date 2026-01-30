@@ -6,7 +6,7 @@ export const ProductsSort = () => {
     <select
       value={sort}
       onChange={(e) => setSort(e.target.value as SortOption)}
-      className="mb-4 w-full max-w-xs rounded border p-2">
+      className="mb-4 w-full max-w-xs rounded border bg-stone-300 p-2 hover:bg-stone-200 xl:w-2xl dark:bg-slate-600 dark:text-white hover:dark:bg-slate-700">
       <option value="none">Default sorting</option>
       <option value="price-asc">Price: Low → High</option>
       <option value="price-desc">Price: High → Low</option>
