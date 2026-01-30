@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
-import type { Product } from '../types';
+import type { Product } from '../../../types';
 import { usePaginationStore } from '../stores/usePaginationStore';
-import { PRODUCTS_PER_PAGE } from '../constants';
+import { PRODUCTS_PER_PAGE } from '../../../constants';
 
 export const usePaginatedProducts = (products: Product[]) => {
   const { pageNum, totalPages, setTotalPages, setPageNum } = usePaginationStore();

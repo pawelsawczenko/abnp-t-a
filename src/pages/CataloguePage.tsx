@@ -1,4 +1,4 @@
-import { Products } from '../components/Products/Products';
+import { Products } from '../features/catalogue';
 
 export const CataloguePage = () => {
   return (

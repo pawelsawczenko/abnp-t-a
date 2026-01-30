@@ -1,19 +1,17 @@
-import { useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getProducts } from '../../api/productsAPI';
-import { ProductCard } from '../ProductCard/ProductCard';
-import { SkeletonCard } from '../ProductCard/SkeletonCard';
-import { ProductsPagination } from '../ProductsPagination/ProductsPagination';
-import { usePaginationStore } from '../../stores/usePaginationStore';
-import { getCategories } from '../../api/categoriesAPI';
-import { CategoriesFilter } from '../CategoriesFilter/CategoriesFilter';
+import { getProducts } from './api/productsAPI';
+import { ProductCard } from '../../components/ProductCard/ProductCard';
+import { SkeletonCard } from '../../components/ProductCard/SkeletonCard';
+import { ProductsPagination } from './components/ProductsPagination/ProductsPagination';
+import { getCategories } from './api/categoriesAPI';
+import { CategoriesFilter } from './components/CategoriesFilter/CategoriesFilter';
 import { PRODUCTS_PER_PAGE } from '../../constants';
-import { usePaginatedProducts } from '../../hooks/usePaginatedProducts';
-import { useFilteredByCategoryProducts } from '../../hooks/useFilteredByCategoryProducts';
-import { useProductSearch } from '../../hooks/useProductSearch';
-import { ProductsSearchInput } from '../ProductsSearchInput/ProductsSearchInput';
-import { useSortedProducts } from '../../hooks/useSortedProducts';
-import { ProductsSort } from '../ProductsSort/ProductsSort';
+import { usePaginatedProducts } from './hooks/usePaginatedProducts';
+import { useFilteredByCategoryProducts } from './hooks/useFilteredByCategoryProducts';
+import { useProductSearch } from './hooks/useProductSearch';
+import { ProductsSearchInput } from './components/ProductsSearchInput/ProductsSearchInput';
+import { useSortedProducts } from './hooks/useSortedProducts';
+import { ProductsSort } from './components/ProductsSort/ProductsSort';
 
 export const Products = () => {
   const {
@@ -36,18 +34,10 @@ export const Products = () => {
     queryFn: getCategories
   });
 
-  const { pageNum } = usePaginationStore();
-
   const { search, setSearch, filteredProducts } = useProductSearch(products);
   const filteredByCategoryProducts = useFilteredByCategoryProducts(filteredProducts);
   const sortedProducts = useSortedProducts(filteredByCategoryProducts);
   const paginatedProducts = usePaginatedProducts(sortedProducts);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    containerRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [pageNum]);
 
   if (isLoadingProducts || isLoadingCategories) {
     return (
@@ -68,7 +58,7 @@ export const Products = () => {
   }
 
   return (
-    <div ref={containerRef} className="pt-2">
+    <div className="pt-2">
       <CategoriesFilter categories={categories || []} />
 
       <div className="flex flex-wrap justify-between">

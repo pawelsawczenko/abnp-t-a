@@ -5,9 +5,20 @@ import { ProductsPaginationButton } from './ProductsPaginationButton';
 export const ProductsPagination = () => {
   const { pageNum, totalPages, nextPage, prevPage } = usePaginationStore();
 
+  const scrollToTop = () => {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 0);
+  };
+
   return (
     <div className="mb-8 flex justify-center gap-4">
-      <ProductsPaginationButton onClick={prevPage} isDisabled={pageNum <= 1}>
+      <ProductsPaginationButton
+        onClick={() => {
+          prevPage();
+          scrollToTop();
+        }}
+        isDisabled={pageNum === 1}>
         <FaArrowLeftLong className="text-black dark:text-white" />
       </ProductsPaginationButton>
 
@@ -15,7 +26,12 @@ export const ProductsPagination = () => {
         {pageNum} / {totalPages}
       </span>
 
-      <ProductsPaginationButton onClick={nextPage} isDisabled={pageNum === totalPages}>
+      <ProductsPaginationButton
+        onClick={() => {
+          nextPage();
+          scrollToTop();
+        }}
+        isDisabled={pageNum === totalPages}>
         <FaArrowRightLong className="text-black dark:text-white" />
       </ProductsPaginationButton>
     </div>

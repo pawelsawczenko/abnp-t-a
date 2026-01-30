@@ -1,4 +1,4 @@
-import { storeApi } from './storeAPI';
+import { storeApi } from '../../../api/storeAPI';
 
 export const getCategories = async (): Promise<string[]> => {
   const response = await storeApi.get('/products/categories');

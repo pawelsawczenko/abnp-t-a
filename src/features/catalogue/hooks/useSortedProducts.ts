@@ -1,5 +1,5 @@
 import { useSortStore } from '../stores/useSortStore';
-import type { Product } from '../types';
+import type { Product } from '../../../types';
 
 export const useSortedProducts = (products: Product[] = []) => {
   const { sort } = useSortStore();
