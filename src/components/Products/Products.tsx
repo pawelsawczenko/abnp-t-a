@@ -1,14 +1,19 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getProducts } from '../../api/productsAPI';
 import { ProductCard } from '../ProductCard/ProductCard';
 import { SkeletonCard } from '../ProductCard/SkeletonCard';
 import { ProductsPagination } from '../ProductsPagination/ProductsPagination';
-import { usePaginationStore } from '../../stores/productsPaginationStore';
+import { usePaginationStore } from '../../stores/usePaginationStore';
 import { getCategories } from '../../api/categoriesAPI';
 import { CategoriesFilter } from '../CategoriesFilter/CategoriesFilter';
-import { useProductsCategoriesFilterStore } from '../../stores/productsCategoriesFilterStore';
 import { PRODUCTS_PER_PAGE } from '../../constants';
+import { usePaginatedProducts } from '../../hooks/usePaginatedProducts';
+import { useFilteredByCategoryProducts } from '../../hooks/useFilteredByCategoryProducts';
+import { useProductSearch } from '../../hooks/useProductSearch';
+import { ProductsSearchInput } from '../ProductsSearchInput/ProductsSearchInput';
+import { useSortedProducts } from '../../hooks/useSortedProducts';
+import { ProductsSort } from '../ProductsSort/ProductsSort';
 
 export const Products = () => {
   const {
@@ -31,27 +36,14 @@ export const Products = () => {
     queryFn: getCategories
   });
 
-  const { selectedCategory } = useProductsCategoriesFilterStore();
+  const { pageNum } = usePaginationStore();
 
-  const { pageNum, totalPages, setTotalPages, setPageNum } = usePaginationStore();
-
-  const filteredProducts = useMemo(() => {
-    if (!products) return [];
-    return selectedCategory ? products.filter((p) => p.category === selectedCategory) : products;
-  }, [products, selectedCategory]);
-
-  const lastIndex = pageNum * PRODUCTS_PER_PAGE;
-  const firstIndex = lastIndex - PRODUCTS_PER_PAGE;
+  const { search, setSearch, filteredProducts } = useProductSearch(products);
+  const filteredByCategoryProducts = useFilteredByCategoryProducts(filteredProducts);
+  const sortedProducts = useSortedProducts(filteredByCategoryProducts);
+  const paginatedProducts = usePaginatedProducts(sortedProducts);
 
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const total = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
-    if (total !== totalPages) {
-      setTotalPages(total);
-      setPageNum(1);
-    }
-  }, [filteredProducts, totalPages, setTotalPages, setPageNum]);
 
   useEffect(() => {
     containerRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -76,31 +68,35 @@ export const Products = () => {
   }
 
   return (
-    <>
+    <div ref={containerRef} className="pt-2">
       <CategoriesFilter categories={categories || []} />
 
-      <div
-        ref={containerRef}
-        className="mb-8 grid w-xs gap-x-8 gap-y-4 pt-4 md:w-2xl md:grid-cols-2 xl:w-5xl xl:grid-cols-3">
-        {filteredProducts.length > 0 ? (
-          filteredProducts
-            .slice(firstIndex, lastIndex)
-            .map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                title={product.title}
-                price={product.price}
-                description={product.description}
-                image={product.image}
-              />
-            ))
+      <div className="flex flex-wrap justify-between">
+        <ProductsSearchInput search={search} setSearch={setSearch} />
+
+        <ProductsSort />
+      </div>
+
+      <div className="mb-4 grid w-xs gap-x-8 gap-y-4 md:w-2xl md:grid-cols-2 xl:w-5xl xl:grid-cols-3">
+        {paginatedProducts.length > 0 ? (
+          paginatedProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              title={product.title}
+              price={product.price}
+              description={product.description}
+              image={product.image}
+            />
+          ))
         ) : (
-          <p>store is empty</p>
+          <p className="flex justify-between font-semibold dark:text-white">
+            There are no items in the store
+          </p>
         )}
       </div>
 
       <ProductsPagination />
-    </>
+    </div>
   );
 };

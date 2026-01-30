@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 
-interface ProductsCategoriesFilterState {
+interface CategoriesFilterState {
   selectedCategory: string | null;
   setSelectedCategory: (category: string | null) => void;
 }
 
-export const useProductsCategoriesFilterStore = create<ProductsCategoriesFilterState>((set) => ({
+export const useCategoriesFilterStore = create<CategoriesFilterState>((set) => ({
   selectedCategory: null,
   setSelectedCategory: (category) => set({ selectedCategory: category })
 }));

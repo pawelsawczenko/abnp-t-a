@@ -1,9 +1,9 @@
-import { useProductsCategoriesFilterStore } from '../../stores/productsCategoriesFilterStore';
+import { useCategoriesFilterStore } from '../../stores/useCategoriesFilterStore';
 import { CategoryButton } from './CategoryButton';
 import type { CategoriesFilterProps } from './types';
 
 export const CategoriesFilter = ({ categories }: CategoriesFilterProps) => {
-  const { selectedCategory, setSelectedCategory } = useProductsCategoriesFilterStore();
+  const { selectedCategory, setSelectedCategory } = useCategoriesFilterStore();
 
   return (
     <div className="mb-6 flex flex-wrap gap-2">
