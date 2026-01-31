@@ -18,7 +18,7 @@ export const ProductsPagination = () => {
           prevPage();
           scrollToTop();
         }}
-        isDisabled={pageNum === 1}>
+        isDisabled={pageNum <= 1}>
         <FaArrowLeftLong className="text-black dark:text-white" />
       </ProductsPaginationButton>
 
