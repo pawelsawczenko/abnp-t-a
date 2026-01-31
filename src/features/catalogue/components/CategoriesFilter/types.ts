@@ -1,9 +1,9 @@
-export interface CategoryButtonProps {
+export interface ICategoryButtonProps {
   category: string;
   isSelected: boolean;
   onClick: () => void;
 }
 
-export interface CategoriesFilterProps {
+export interface ICategoriesFilterProps {
   categories: string[];
 }

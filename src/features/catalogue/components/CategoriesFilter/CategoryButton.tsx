@@ -1,6 +1,6 @@
-import type { CategoryButtonProps } from './types';
+import type { ICategoryButtonProps } from './types';
 
-export const CategoryButton = ({ category, isSelected, onClick }: CategoryButtonProps) => {
+export const CategoryButton = ({ category, isSelected, onClick }: ICategoryButtonProps) => {
   return (
     <button
       onClick={onClick}

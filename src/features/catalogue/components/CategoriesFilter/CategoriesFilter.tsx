@@ -1,8 +1,8 @@
 import { useCategoriesFilterStore } from '../../stores/useCategoriesFilterStore';
 import { CategoryButton } from './CategoryButton';
-import type { CategoriesFilterProps } from './types';
+import type { ICategoriesFilterProps } from './types';
 
-export const CategoriesFilter = ({ categories }: CategoriesFilterProps) => {
+export const CategoriesFilter = ({ categories }: ICategoriesFilterProps) => {
   const { selectedCategory, setSelectedCategory } = useCategoriesFilterStore();
 
   return (

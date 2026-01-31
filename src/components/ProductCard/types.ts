@@ -1,3 +1,3 @@
-import type { Product } from '../../types';
+import type { IProduct } from '../../types';
 
-export type ProductCardProps = Product;
+export type ProductCardProps = IProduct;

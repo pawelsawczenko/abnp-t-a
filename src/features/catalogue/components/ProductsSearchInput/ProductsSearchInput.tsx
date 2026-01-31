@@ -1,6 +1,6 @@
-import type { ProductsSearchInputProps } from './types';
+import type { IProductsSearchInputProps } from './types';
 
-export const ProductsSearchInput = ({ search, setSearch }: ProductsSearchInputProps) => {
+export const ProductsSearchInput = ({ search, setSearch }: IProductsSearchInputProps) => {
   return (
     <>
       <input

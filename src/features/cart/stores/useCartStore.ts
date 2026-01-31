@@ -1,16 +1,16 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Product } from '../../../types';
+import type { IProduct } from '../../../types';
 
 interface ICartItem {
-  product: Product;
+  product: IProduct;
   quantity: number;
 }
 
 interface ICartState {
   items: ICartItem[];
 
-  addItem: (product: Product, quantity?: number) => void;
+  addItem: (product: IProduct, quantity?: number) => void;
   removeItem: (productId: number) => void;
   clearCart: () => void;
 

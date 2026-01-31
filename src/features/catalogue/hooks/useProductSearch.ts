@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
-import type { Product } from '../../../types';
+import type { IProduct } from '../../../types';
 import { useDebounce } from '../../../hooks/useDebounce';
 
-export const useProductSearch = (products: Product[] | undefined) => {
+export const useProductSearch = (products: IProduct[] | undefined) => {
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 300);
 

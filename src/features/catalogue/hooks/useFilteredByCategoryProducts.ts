@@ -1,9 +1,9 @@
 // hooks/useFilteredProducts.ts
 import { useMemo } from 'react';
-import type { Product } from '../../../types';
+import type { IProduct } from '../../../types';
 import { useCategoriesFilterStore } from '../stores/useCategoriesFilterStore';
 
-export const useFilteredByCategoryProducts = (products: Product[] | undefined) => {
+export const useFilteredByCategoryProducts = (products: IProduct[] | undefined) => {
   const { selectedCategory } = useCategoriesFilterStore();
 
   const filteredProducts = useMemo(() => {
