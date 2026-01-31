@@ -16,11 +16,11 @@ Locally preview production build.
 
 ## Chosen technologies
 
-[Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) - for easy setup and simple persist state data to local storage.
+[Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) - for easy setup and simple persisted state stored in localStorage.
 
-[Tanstack/react-query](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions) + [axios](https://axios-http.com/docs/intro) - for managing server state, loading/error state handling and automatic caching (react-quary).
+[Tanstack/react-query](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions) + [Axios](https://axios-http.com/docs/intro) - for managing server state, handling loading/error states, and automatic caching..
 
-[Tailwind CSS](https://tailwindcss.com/) - for css styling. With no design utility first approach was chosen as the most fast and flexible. 
+[Tailwind CSS](https://tailwindcss.com/) - for styling. A utility‑first approach was chosen as the fastest and most flexible option. 
 
 ## React + TypeScript + Vite
 
