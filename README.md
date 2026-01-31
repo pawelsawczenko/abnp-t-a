@@ -1,11 +1,28 @@
-# React + TypeScript + Vite
+# Fake Store Test Assignment
+
+Deploy -> [abnp-fakestore-t-a-ps.netlify.app](https://abnp-fakestore-t-a-ps.netlify.app/)
+
+## Available Scripts
 
 ### `npm run dev`
 Runs the app in the development mode.
 Open http://localhost:5173 to view it in the browser.
 
-Uses [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) for easy setup and simple persist state data to local storage.
-Uses [Tanstack/react-query](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions) + [axios](https://axios-http.com/docs/intro) for managing server state.
+### `npm run build`
+Build for production.
+
+### `npm run preview`
+Locally preview production build.
+
+## Chosen technologies
+
+[Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) - for easy setup and simple persist state data to local storage.
+
+[Tanstack/react-query](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions) + [axios](https://axios-http.com/docs/intro) - for managing server state, loading/error state handling and automatic caching (react-quary).
+
+[Tailwind CSS](https://tailwindcss.com/) - for css styling. With no design utility first approach was chosen as the most fast and flexible. 
+
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
