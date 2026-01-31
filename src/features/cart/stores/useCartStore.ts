@@ -64,7 +64,7 @@ export const useCartStore = create<ICartState>()(
             .filter((i) => i.quantity > 0)
         }),
 
-      getTotalItems: () => get().items.length,
+      getTotalItems: () => get().items.reduce((sum, item) => sum + item.quantity, 0),
 
       getTotalPrice: () =>
         get().items.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
