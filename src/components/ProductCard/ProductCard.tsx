@@ -1,6 +1,9 @@
 import { Bounce, toast } from 'react-toastify';
 import { useCartStore } from '../../features/cart/stores/useCartStore';
 import type { ProductCardProps } from './types';
+import { FaRegCircleDot, FaRegCircleXmark } from 'react-icons/fa6';
+
+const isInStock = true;
 
 export const ProductCard = ({
   id,
@@ -35,9 +38,22 @@ export const ProductCard = ({
       <div className="mb-4 flex justify-between">
         <p className="pt-2 pb-2 font-semibold dark:text-white">{price}$</p>
 
+        <div
+          className={`flex items-center gap-2 pt-2 pb-2 font-semibold ${isInStock ? 'text-green-600' : 'text-red-400'}`}>
+          {isInStock ? (
+            <FaRegCircleDot />
+          ) : (
+            <>
+              <FaRegCircleXmark /> not
+            </>
+          )}{' '}
+          in stock
+        </div>
+
         <button
-          className="cursor-pointer rounded bg-amber-300 px-4 py-2 font-semibold hover:bg-amber-400 dark:bg-sky-600 dark:text-white hover:dark:bg-sky-500"
-          onClick={handleAddToCart}>
+          className="rounded bg-amber-300 px-4 py-2 font-semibold not-disabled:cursor-pointer not-disabled:hover:bg-amber-400 disabled:bg-stone-400 disabled:opacity-40 dark:bg-sky-600 dark:text-white not-disabled:hover:dark:bg-sky-500 disabled:dark:bg-slate-700"
+          onClick={handleAddToCart}
+          disabled={!isInStock}>
           Add to Cart
         </button>
       </div>
