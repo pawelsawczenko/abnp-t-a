@@ -69,16 +69,7 @@ export const Products = () => {
 
       <div className="mb-4 grid w-xs gap-x-8 gap-y-4 md:w-2xl md:grid-cols-2 xl:w-5xl xl:grid-cols-3">
         {paginatedProducts.length > 0 ? (
-          paginatedProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              title={product.title}
-              price={product.price}
-              description={product.description}
-              image={product.image}
-            />
-          ))
+          paginatedProducts.map((product) => <ProductCard key={product.id} {...product} />)
         ) : (
           <p className="flex justify-between font-semibold dark:text-white">
             There are no items in the store

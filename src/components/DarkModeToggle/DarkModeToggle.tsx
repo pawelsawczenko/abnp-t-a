@@ -6,7 +6,11 @@ export const DarkModeToggle = () => {
 
   return (
     <button onClick={toggleDarkMode} className="cursor-pointer">
-      {isDarkMode ? <FaRegSun className="text-white" /> : <FaMoon className="text-black" />}
+      {isDarkMode ? (
+        <FaRegSun className="text-2xl text-white hover:text-amber-400" />
+      ) : (
+        <FaMoon className="text-2xl text-black hover:text-sky-600" />
+      )}
     </button>
   );
 };

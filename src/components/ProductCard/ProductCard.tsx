@@ -1,8 +1,31 @@
+import { Bounce, toast } from 'react-toastify';
+import { useCartStore } from '../../features/cart/stores/useCartStore';
 import type { ProductCardProps } from './types';
 
-export const ProductCard = ({ id, title, price, description, image }: ProductCardProps) => {
+export const ProductCard = ({
+  id,
+  title,
+  price,
+  description,
+  image,
+  rating,
+  category
+}: ProductCardProps) => {
+  const addItem = useCartStore((store) => store.addItem);
+
   const handleAddToCart = () => {
-    console.log(`id ${id} added to cart`);
+    addItem({ id, title, price, description, image, rating, category });
+
+    toast.success(`${title} added to cart`, {
+      position: 'top-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      transition: Bounce
+    });
   };
 
   return (
