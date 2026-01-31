@@ -1,5 +1,12 @@
 # React + TypeScript + Vite
 
+### `npm run dev`
+Runs the app in the development mode.
+Open http://localhost:5173 to view it in the browser.
+
+Uses [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) for easy setup and simple persist state data to local storage.
+Uses [Tanstack/react-query](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions) + [axios](https://axios-http.com/docs/intro) for managing server state.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
